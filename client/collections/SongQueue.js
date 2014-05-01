@@ -14,6 +14,15 @@ var SongQueue = Songs.extend({
       this.shift();
     }, this);
 
+    this.on('removeFromView', function(song){
+      this.remove(song);
+      if (this.length > 0){
+        this.at(0).play();
+      }else{
+        song.stopPlaying();
+      }
+    }, this);
+
     this.on('ended', function(){
       this.shift();
 

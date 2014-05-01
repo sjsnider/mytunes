@@ -14,6 +14,14 @@ var SongModel = Backbone.Model.extend({
     this.trigger('dequeue', this);
   },
 
+  removeFromView: function(){
+    this.trigger('removeFromView', this);
+  },
+
+  stopPlaying: function(){
+    this.trigger('stopPlaying', this);
+  },
+
   ended: function(){
     this.trigger('ended', this);
   }
