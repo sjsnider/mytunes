@@ -5,16 +5,27 @@ var SongQueue = Songs.extend({
     //this.set('songCollection', new Songs());
     this.on('add', function(song){
       this.add(song);
-      debugger;
       if(this.models.length===1){
         this.playFirst(song);
       }
     }, this);
+
+
+    // this.on('ended', function(){
+    //   debugger;
+    //   //this.ended();
+    // }, this);
+
   },
 
   playFirst: function(song){
-    debugger;
     this.models[0].play();
     //this.get('songCollection').add(song);
+  },
+
+  ended: function(){
+    debugger;
+    this.trigger('ended', this);
+
   }
 });
