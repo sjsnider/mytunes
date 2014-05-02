@@ -2,34 +2,33 @@
 var SongQueue = Songs.extend({
 
   initialize: function(){
-    //this.set('songCollection', new Songs());
-    this.on('add', function(song){
-      this.add(song);
-      if(this.models.length===1){
+
+    this.on('ended', function(){
+      this.shift();
+      if(this.length===1){
         this.playFirst();
+      }else if(this.length>1){
+        this.at(0).play();
+      }
+    }, this);
+
+    this.on('add', function(){
+      if(this.length===1){
+        this.playFirst();
+      }
+      else{
+        this.at(0).play();
       }
     }, this);
 
     this.on('dequeue', function(song){
-      this.shift();
-    }, this);
-
-    this.on('removeFromView', function(song){
       this.remove(song);
-      if (this.length > 0){
-        this.at(0).play();
-      }else{
-        song.stopPlaying();
-      }
-    }, this);
-
-    this.on('ended', function(){
-      this.shift();
-
-      if (this.length ===1){
+      if(this.length===1){
         this.playFirst();
       }else if(this.length > 1){
         this.at(0).play();
+      }else{
+        this.trigger('stop');
       }
     }, this);
 
@@ -37,7 +36,6 @@ var SongQueue = Songs.extend({
 
   playFirst: function(){
     this.at(0).play();
-    //this.get('songCollection').add(song);
   }
 
 });
